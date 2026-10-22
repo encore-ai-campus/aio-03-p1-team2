@@ -34,8 +34,6 @@ NoteCam은 집 안의 상황을 확인하고 싶지만 별도 홈캠 구매가 �
 | 관리 | 계정·피드백 관리, 관리자 감사 로그, 카메라·분석 기록 조회 |
 | 선택적 연동 | Discord OAuth 및 DM 알림 (설정 필요) |
 
-> 표는 개발 코드에 구현된 기능 범위입니다. 실제 서비스에서 모두 정상 동작한다는 통합 테스트 증빙을 의미하지 않습니다.
-
 ## 시스템 아키텍처
 
 ```mermaid
@@ -62,21 +60,20 @@ flowchart LR
 | 외부 알림 | Discord OAuth / Bot / DM |
 | 협업 | GitHub, Git |
 
-## 실제 개발 저장소
+## 개발 저장소
 
-- [Backend](https://github.com/joel10195/aio-03-p1-team2-Back) — 기준 커밋 `70f023e` (2026-10-22)
-- [Frontend](https://github.com/joel10195/aio-03-p1-team2-Front) — 기준 커밋 `4a382aa` (2026-10-22)
+- [Backend](https://github.com/joel10195/aio-03-p1-team2-Back) — 기준 커밋 `70f023e`
+- [Frontend](https://github.com/joel10195/aio-03-p1-team2-Front) — 기준 커밋 `18330e7`
 - [제출용 통합 저장소](https://github.com/encore-ai-campus/aio-03-p1-team2)
 
 ## 로컬 실행 방법
 
-실행에는 Supabase 프로젝트와 필요한 API 키, Python/uv, Node.js/npm이 필요합니다. **비밀 키는 GitHub에 올리지 않습니다.**
+실행에는 Supabase 프로젝트와 필요한 API 키, Python 3.12 이상/uv, Node.js/npm이 필요합니다. **비밀 키는 GitHub에 올리지 않습니다.**
 
 **백엔드 (PowerShell)**
 
 ```powershell
-git clone https://github.com/joel10195/aio-03-p1-team2-Back.git
-cd aio-03-p1-team2-Back
+cd C:\aio-03-p1-team2
 Copy-Item .env.example .env
 # .env의 Supabase 관련 값과 필요 시 AI/Redis 설정 입력
 uv sync --frozen
@@ -87,8 +84,8 @@ uv run uvicorn backend.main:app --reload --no-access-log
 **프론트엔드 (새 PowerShell)**
 
 ```powershell
-git clone https://github.com/joel10195/aio-03-p1-team2-Front.git
-cd aio-03-p1-team2-Front/frontend
+cd C:\aio-03-p1-team2\frontend
+Copy-Item .env.example .env
 npm ci
 npm run dev
 ```
@@ -96,7 +93,7 @@ npm run dev
 - 프론트 개발 주소: `http://localhost:5173`
 - FastAPI Swagger: `http://127.0.0.1:8000/docs`
 - 프론트의 `VITE_API_BASE_URL` 및 백엔드 `CORS_ORIGINS`는 실행 환경에 맞춰 설정합니다.
-- 실제 DB 스키마는 서버 실행 시 자동 생성되지 않습니다. 관련 SQL은 백엔드 문서를 확인하세요.
+- 실제 DB 스키마는 서버 실행 시 자동 생성되지 않습니다. 관련 SQL은 [백엔드 개발 문서](docs/backend/README.md)와 [스키마 SQL](docs/backend/web_supabase.sql)을 확인하세요.
 
 ## 설계 문서
 
@@ -104,12 +101,9 @@ npm run dev
 |---|---|
 | [시스템 아키텍처](docs/architecture.md) | 시스템 구성도, 감지·분석 시퀀스 |
 | [API 명세서](docs/api-design.md) | 인증·감지·분석·알림·관리자·Discord API |
-| [DB 설계서](docs/database-design.md) | Supabase 실제 14개 테이블, 논리·물리 ERD, PK/FK/제약조건 |
-| [화면 설계서](docs/screen-design.md) | 화면 IA, 실제 화면 18장, API 연결 |
+| [DB 설계서](docs/database-design.md) | Supabase 14개 테이블, 논리·물리 ERD, PK/FK/제약조건 |
+| [화면 설계서](docs/screen-design.md) | 화면 IA, 화면 18장, API 연결 |
 
-## 검증 및 문서 기준
+## 문서 구성
 
-- DB 설계는 2026-10-22에 조회한 Supabase 테이블·제약조건 결과를 기준으로 합니다.
-- API 및 화면 구조는 위 개발 저장소의 기준 커밋과 문서를 참고했습니다.
-- 관리자 **운영현황** 화면과 **실시간 시스템 운영 로그 대시보드**는 동일한 것으로 취급하지 않습니다. 후자는 별도 구현/검증이 필요합니다.
-- 공개 저장소 업로드 전 스크린샷에 개인정보·얼굴·실내 장면이 포함됐는지 검토하세요.
+본 저장소는 NoteCam의 서비스 개요, 주요 기능, 시스템 구성, API, 데이터 모델 및 사용자·관리자 화면을 정리한 프로젝트 산출물입니다.

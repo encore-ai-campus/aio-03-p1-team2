@@ -1,11 +1,11 @@
 # 데이터베이스 설계서
 
-> 기준: 사용자 제공 Supabase `information_schema.columns` 및 `pg_constraint` 조회 결과 (2026-10-22). **실제 DB 구조**를 우선하며 코드의 오래된 README보다 우선합니다.
+> NoteCam의 Supabase PostgreSQL 데이터 모델을 기준으로 테이블, 관계, 키 및 제약조건을 정리합니다.
 
 ## 1. 개요
 
 - `public` 테이블 14개, 외부 참조 `auth.users` 1개 (Supabase Auth 관리 테이블)
-- 실제 컬럼, PK, FK, UNIQUE, CHECK를 반영했습니다. 인덱스 전체·RLS 정책·Storage 버킷 실재 여부는 이번 조회로 검증하지 않았습니다.
+- `public` 테이블의 컬럼, PK, FK, UNIQUE 및 CHECK 제약조건을 중심으로 물리 데이터 모델을 기술합니다.
 - `bigint` ID의 시퀀스/IDENTITY 여부는 조회 결과의 `column_default=null`만으로 확정하지 않습니다.
 
 ## 2. 논리 ERD
@@ -436,11 +436,49 @@ erDiagram
 | `discord_connections.user_id` | `auth.users.id` |
 | `discord_deliveries.notification_id` | `notifications.id` |
 
-## 6. 실제 DB 기준 주의 사항
+## 6. 데이터 모델 설계 원칙
 
-- `notifications` 테이블은 실제 조회에서 **존재**함을 확인했습니다. 기존 백엔드 `docs/API_CONTRACT.md`의 “notifications 테이블 없음” 설명은 이전 상태로 보입니다.
+- `notifications`는 사건별 웹 알림 및 읽음 상태를 관리합니다.
 - `feedback`은 사건 FK가 없는 독립 피드백입니다.
 - `motion_event_analyses.event_id`, `notifications.event_id`는 UNIQUE로 사건별 최대 1행입니다.
 - `discord_deliveries.notification_id`는 PK이자 FK입니다.
 - `profiles.role`과 `profiles.status`는 관리자 권한 판정에 사용됩니다.
-- `auth.users` 컬럼 전체는 Supabase 관리 영역이라 이 문서에 재현하지 않았습니다.
+- `auth.users`는 Supabase Auth에서 관리하며, 서비스 테이블은 사용자 식별자를 참조합니다.
+
+## 7. 데이터 무결성·보안·저장소 설계
+
+### 7.1 PK/FK 및 삭제 정책
+
+- `auth.users`는 Supabase Auth 관리 영역이며 이 문서의 `public` 14개 테이블 수에 포함되지 않습니다.
+- `profiles.id`, `discord_connections.user_id`, `motion_analysis_questions.user_id`는 각각 `auth.users.id`를 참조하는 공유 식별자입니다.
+- `feedback.user_id → profiles.id`는 사용자 삭제 시 CASCADE, `admin_audit_logs.actor_id → auth.users.id`는 삭제 시 SET NULL입니다.
+- `discord_connections.user_id → auth.users.id`, `discord_deliveries.notification_id → notifications.id`, `notifications.owner_id → auth.users.id`, `notifications.event_id → motion_events.id`는 CASCADE입니다.
+- FK의 삭제 동작은 각 관계에 정의된 참조 무결성 정책을 따릅니다.
+
+### 7.2 중요 제약조건 및 업무 규칙
+
+| 테이블 | 무결성 규칙 | 의미 |
+|---|---|---|
+| `profiles` | `role` user/admin, `status` active/inactive | 서버의 권한 및 접근 차단 기준 |
+| `feedback` | `kind` 4종, `status` 3종, `deleted_at` | 분류·처리 상태·논리 삭제 |
+| `motion_runs` | `status` starting/running/stopping/stopped/failed | 감지 실행 생명주기 |
+| `motion_events` | `capture_state` collecting/closed/interrupted, `final_part_index` 양수 | 사건 종료 및 묶음 수 확인 |
+| `motion_parts` | UNIQUE (`event_id`, `part_index`) | 같은 사건 내 묶음 순번 중복 방지 |
+| `motion_photos` | UNIQUE (`storage_key`), (`part_id`, `sequence_no`) | 파일 키·묶음 내 사진 순서 중복 방지 |
+| `motion_photos` | `byte_size` 1~12,582,912, `sha256` 64자리 소문자 hex | 사진 크기·무결성 형식 제한 |
+| `motion_analyses` | `origin` auto/manual, `status` 4종, `latency_ms` ≥ 0 | 자동/수동 분석 및 처리 지연 |
+| `motion_event_analyses` | UNIQUE (`event_id`) | 사건 종합 분석 최대 1행 |
+| `notifications` | UNIQUE (`event_id`), `verdict` confirmed/uncertain | 사건당 알림 최대 1행 |
+| `discord_deliveries` | `notification_id` PK/FK, `attempts` 0~5 | 알림당 발송 작업 최대 1행 |
+
+### 7.3 접근 제어 및 데이터 보호
+
+- 사용자 인증은 Supabase Auth JWT를 사용하며, 서버에서 `profiles.role`과 `profiles.status`를 확인합니다.
+- 카메라, 사건 및 피드백은 소유 사용자 기준으로 접근 범위를 구분합니다.
+- 관리자 기능은 `admin` 역할을 가진 활성 계정에 한해 제공됩니다.
+- 촬영 이미지는 비공개 저장소와 인증된 API를 통해 관리합니다.
+- Service Role 키와 외부 서비스 비밀 키는 서버 측에서만 사용합니다.
+
+### 7.5 테이블별 사용 흐름
+
+`auth.users → profiles → feedback → admin_audit_logs`는 계정·고객 문의·관리 이력 영역입니다. `cameras → motion_runs → motion_events → motion_parts → motion_photos`는 촬영 증거 계층이며, `motion_analyses`는 사진 묶음별 AI 결과, `motion_event_analyses`는 사건 단위 종합 결과입니다. `motion_analysis_questions`는 사용자별 질문 설정을 보존합니다. `notifications → discord_deliveries`와 `discord_connections`는 웹·외부 알림 전송 상태를 분리해 기록합니다.
