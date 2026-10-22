@@ -1,247 +1,115 @@
-# NoteCam - AI 홈 CCTV 서비스
+# NoteCam | AI 홈 CCTV
 
-**NoteCam(노트캠)**은 별도의 CCTV 장비 없이 노트북이나 웹캠을 활용하여 집 안의 상황을 모니터링할 수 있는 AI 기반 홈 CCTV 서비스입니다.
+> 별도의 CCTV 장비 없이 브라우저 웹캠으로 움직임을 감지하고, Gemini AI로 사건을 분석해 기록·알림을 제공하는 홈 모니터링 서비스
 
-OpenCV를 이용해 움직임을 감지하고, Gemini AI로 촬영된 이미지를 분석하여 사용자가 집 안에서 발생한 상황을 확인할 수 있도록 지원합니다.
+**엔코아 AI 캠퍼스 · AIO 03기 · P1 Team 2**
 
-React 기반 웹 인터페이스를 통해 실시간 카메라 화면, 이벤트 기록, AI 분석 결과 및 알림을 제공합니다.
+[시스템 구성도](docs/architecture.md) · [API 명세서](docs/api-design.md) · [DB 설계서 / 논리·물리 ERD](docs/database-design.md) · [화면 설계서](docs/screen-design.md)
 
-## 1. 프로젝트 개요
+## 프로젝트 소개
 
-### 개발 배경
+NoteCam은 집 안의 상황을 확인하고 싶지만 별도 홈캠 구매가 부담스러운 사용자를 위한 AI 홈 모니터링 서비스입니다. 브라우저에서 촬영한 프레임을 FastAPI로 전송하고, 움직임 감지·사진 저장·AI 분석 결과 조회를 연결합니다.
 
-기존 홈 CCTV는 별도의 카메라 장비 구매와 설치가 필요하며, 사용자가 직접 영상을 확인해야 하는 불편함이 있습니다.
+## 서비스 화면
 
-이를 개선하기 위해 기존 웹캠을 활용하고, AI가 감지된 상황을 분석하여 사용자에게 전달하는 서비스를 기획했습니다.
-
-### 프로젝트 목표
-
-- 별도의 CCTV 장비 없이 웹캠을 활용한 모니터링 환경 제공
-- 움직임 감지 및 AI 기반 상황 분석
-- 외출 중 사람 감지 시 사용자 알림 제공
-- 실시간 카메라 화면과 과거 이벤트 기록 조회
-- 사용자 및 관리자 기능을 구분한 웹 서비스 구현
-
-## 2. 주요 기능
-
-| 기능 | 설명 |
+| 메인 화면 | 사용자 대시보드 |
 |---|---|
-| 회원가입 및 로그인 | Supabase Auth 기반 사용자 인증 |
-| 실시간 모니터링 | 웹 브라우저를 통한 카메라 화면 확인 |
-| 움직임 감지 | OpenCV 기반 움직임 탐지 및 이미지 수집 |
-| AI 상황 분석 | Gemini API를 활용한 이미지 분석 |
-| 이벤트 기록 | 감지된 움직임과 분석 결과 조회 |
-| 실시간 알림 | 움직임 감지 알림 및 읽음 상태 관리 |
-| 사용자 관리 | 프로필 조회 및 수정 |
-| 피드백 | 사용자 문의 및 오탐·미탐 관련 피드백 |
-| 관리자 기능 | 사용자, 피드백, 카메라 기록 및 감사 로그 관리 |
-| Discord 연동 | Discord 계정 연결 및 DM 알림 설정 |
+| ![소개](screenshots/01-landing.jpg) | ![사용자 대시보드](screenshots/04-user-dashboard.jpg) |
+| 실시간 보기 | AI 사건 상세 |
+| ![실시간 보기](screenshots/05-live-camera.jpg) | ![AI 분석](screenshots/07-event-detail.jpg) |
+| 관리자 운영현황 | 관리자 Gemini 분석 기록 |
+| ![운영현황](screenshots/11-admin-overview.jpg) | ![Gemini 분석](screenshots/16-admin-gemini-analysis.jpg) |
 
-일부 기능은 서버 환경변수, 데이터베이스 및 외부 서비스 설정이 완료되어야 정상적으로 동작합니다.
+[전체 18개 화면 및 기능 명세 보기](docs/screen-design.md)
 
-## 3. 기술 스택
+## 주요 기능
 
-| 구분 | 기술 |
+| 구분 | 기능 |
 |---|---|
-| Frontend | React, JavaScript, Vite, CSS |
-| Backend | Python, FastAPI, Pydantic |
-| Database | PostgreSQL, Supabase |
-| Authentication | Supabase Auth, JWT |
-| AI | Google Gemini API |
-| Computer Vision | OpenCV, YOLO |
-| Cache / Realtime | Redis, SSE |
-| Deployment | Linux VM, GitHub |
-| Collaboration | Git, GitHub |
+| 계정 | Supabase Auth 기반 회원가입·로그인, 프로필, 사용자/관리자 역할 분리 |
+| 카메라 | 브라우저 카메라 제어, JPEG 프레임 전송, 움직임 감지 |
+| AI | OpenCV·YOLO 감지, Gemini 질문별 분석 및 사건 종합 분석 |
+| 기록 | 사건·사진 묶음·분석 결과 조회 |
+| 실시간 | 웹 알림 조회·읽음, Redis Pub/Sub 기반 SSE, 다른 기기 미리보기 |
+| 관리 | 계정·피드백 관리, 관리자 감사 로그, 카메라·분석 기록 조회 |
+| 선택적 연동 | Discord OAuth 및 DM 알림 (설정 필요) |
 
-## 4. 시스템 아키텍처
+> 표는 개발 코드에 구현된 기능 범위입니다. 실제 서비스에서 모두 정상 동작한다는 통합 테스트 증빙을 의미하지 않습니다.
 
-```text
-사용자 웹 브라우저
-       |
-       v
-React Frontend
-       |
-       | HTTP / REST API / SSE
-       v
-FastAPI Backend
-       |
-       +---- Supabase
-       |       ├── 사용자 인증
-       |       ├── 데이터베이스
-       |       └── 이벤트 및 사용자 정보
-       |
-       +---- Motion Detection
-       |       ├── 카메라 입력
-       |       ├── 움직임 감지
-       |       └── 이미지 수집
-       |
-       +---- Gemini AI
-       |       └── 이미지 및 상황 분석
-       |
-       +---- Redis
-       |       └── 실시간 알림 지원
-       |
-       +---- Discord
-               └── DM 알림 연동
+## 시스템 아키텍처
+
+```mermaid
+flowchart LR
+  B[React 웹 브라우저 / 카메라] <-->|REST·JPEG·SSE·MJPEG| F[FastAPI]
+  F <--> S[(Supabase Auth / PostgreSQL / Storage)]
+  F --> V[OpenCV / YOLO]
+  V --> G[Gemini API]
+  F <--> R[(Redis)]
+  F --> D[Discord 연동]
 ```
 
-### 주요 동작 흐름
+[상세 아키텍처 및 감지·분석 시퀀스](docs/architecture.md)
 
-1. 사용자가 로그인하고 카메라 모니터링을 시작합니다.
-2. 움직임 감지 모듈이 카메라 프레임을 분석합니다.
-3. 움직임이 감지되면 관련 이미지를 수집합니다.
-4. 수집된 이미지를 Gemini AI에 전달하여 상황을 분석합니다.
-5. 분석 결과와 이벤트 정보를 저장합니다.
-6. 사용자는 웹 화면에서 이벤트 기록과 알림을 확인합니다.
+## 기술 스택
 
-## 5. 프로젝트 폴더 구조
+| 분야 | 기술 |
+|---|---|
+| Frontend | React 18, Vite, JavaScript, CSS |
+| Backend | Python, FastAPI, Pydantic, uv |
+| AI/Vision | OpenCV, YOLO, Gemini API |
+| Database/Auth | Supabase PostgreSQL, Supabase Auth, private Storage |
+| 실시간 알림 | Redis Pub/Sub, Server-Sent Events (SSE) |
+| 외부 알림 | Discord OAuth / Bot / DM |
+| 협업 | GitHub, Git |
 
-```text
-aio-03-p1-team2/
-│
-├── backend/
-│   ├── backend/
-│   │   ├── admin/
-│   │   ├── common/
-│   │   ├── discord/
-│   │   ├── feedback/
-│   │   ├── login/
-│   │   ├── notifications/
-│   │   ├── users/
-│   │   ├── vision/
-│   │   └── main.py
-│   ├── motion_module/
-│   ├── docs/
-│   ├── tests/
-│   ├── pyproject.toml
-│   └── uv.lock
-│
-├── frontend/
-│   ├── frontend/
-│   │   ├── public/
-│   │   ├── src/
-│   │   │   ├── app/
-│   │   │   ├── features/
-│   │   │   ├── shared/
-│   │   │   └── assets/
-│   │   ├── package.json
-│   │   └── vite.config.js
-│   └── Image/
-│
-└── README.md
-```
+## 실제 개발 저장소
 
-## 6. 로컬 실행 방법
+- [Backend](https://github.com/joel10195/aio-03-p1-team2-Back) — 기준 커밋 `70f023e` (2026-10-22)
+- [Frontend](https://github.com/joel10195/aio-03-p1-team2-Front) — 기준 커밋 `4a382aa` (2026-10-22)
+- [제출용 통합 저장소](https://github.com/encore-ai-campus/aio-03-p1-team2)
 
-### 6.1 저장소 Clone
+## 로컬 실행 방법
 
-```bash
-git clone https://github.com/encore-ai-campus/aio-03-p1-team2.git
-cd aio-03-p1-team2
-```
+실행에는 Supabase 프로젝트와 필요한 API 키, Python/uv, Node.js/npm이 필요합니다. **비밀 키는 GitHub에 올리지 않습니다.**
 
-### 6.2 Backend 실행
-
-Python 3.12 이상과 uv가 필요합니다.
+**백엔드 (PowerShell)**
 
 ```powershell
-cd backend
+git clone https://github.com/joel10195/aio-03-p1-team2-Back.git
+cd aio-03-p1-team2-Back
 Copy-Item .env.example .env
-```
-
-`.env`에 Supabase 연결 정보와 필요한 API 키를 설정합니다.
-
-```powershell
+# .env의 Supabase 관련 값과 필요 시 AI/Redis 설정 입력
 uv sync --frozen
 uv run --no-sync python -m scripts.prepare_motion_model
 uv run uvicorn backend.main:app --reload --no-access-log
 ```
 
-- API 서버: http://localhost:8000
-- Swagger API 문서: http://localhost:8000/docs
-- Health Check: http://localhost:8000/health
-
-비전 기능을 사용하려면 관련 데이터베이스 테이블과 모델 설정도 필요합니다.
-
-### 6.3 Frontend 실행
-
-별도의 터미널에서 통합 저장소의 `frontend/frontend` 폴더로 이동합니다.
+**프론트엔드 (새 PowerShell)**
 
 ```powershell
-cd frontend/frontend
+git clone https://github.com/joel10195/aio-03-p1-team2-Front.git
+cd aio-03-p1-team2-Front/frontend
 npm ci
-```
-
-필요한 경우 `.env.example`을 `.env`로 복사하고 백엔드 API 주소를 설정합니다.
-
-```dotenv
-VITE_API_BASE_URL=http://localhost:8000
-```
-
-프론트엔드 실행:
-
-```powershell
 npm run dev
 ```
 
-- Frontend: http://localhost:5173
+- 프론트 개발 주소: `http://localhost:5173`
+- FastAPI Swagger: `http://127.0.0.1:8000/docs`
+- 프론트의 `VITE_API_BASE_URL` 및 백엔드 `CORS_ORIGINS`는 실행 환경에 맞춰 설정합니다.
+- 실제 DB 스키마는 서버 실행 시 자동 생성되지 않습니다. 관련 SQL은 백엔드 문서를 확인하세요.
 
-프론트엔드와 백엔드가 서로 통신할 수 있도록 백엔드의 `CORS_ORIGINS` 설정도 확인해야 합니다.
+## 설계 문서
 
-## 7. 사용자 및 관리자 기능
+| 문서 | 설명 |
+|---|---|
+| [시스템 아키텍처](docs/architecture.md) | 시스템 구성도, 감지·분석 시퀀스 |
+| [API 명세서](docs/api-design.md) | 인증·감지·분석·알림·관리자·Discord API |
+| [DB 설계서](docs/database-design.md) | Supabase 실제 14개 테이블, 논리·물리 ERD, PK/FK/제약조건 |
+| [화면 설계서](docs/screen-design.md) | 화면 IA, 실제 화면 18장, API 연결 |
 
-### 일반 사용자
+## 검증 및 문서 기준
 
-- 회원가입 및 로그인
-- 내 대시보드 확인
-- 실시간 카메라 모니터링
-- 움직임 감지 이벤트 및 AI 분석 결과 조회
-- 알림 조회 및 읽음 처리
-- 프로필 수정
-- 피드백 등록 및 관리
-
-### 관리자
-
-- 운영현황 대시보드
-- 사용자 계정 및 권한 관리
-- 카메라 이벤트 및 분석 기록 조회
-- 사용자 피드백 관리
-- 관리자 작업 감사 로그 조회
-
-관리자 권한은 Supabase의 `profiles.role` 정보를 기준으로 구분합니다.
-
-## 8. API 및 상세 문서
-
-백엔드는 FastAPI 기반 REST API를 제공합니다.
-
-주요 API 영역은 다음과 같습니다.
-
-- `/api/auth` : 사용자 인증
-- `/api/users` : 사용자 프로필
-- `/api/notifications` : 알림
-- `/api/feedback` : 피드백
-- `/api/admin` : 관리자 기능
-- `/health` : 서버 상태 확인
-
-상세 API 명세 및 실행 방법은 다음 문서를 참고합니다.
-
-- [Backend README](backend/README.md)
-- [Frontend README](frontend/README.md)
-- [API Contract](backend/docs/API_CONTRACT.md)
-- [Database Guide](backend/docs/DB_HANDOFF.md)
-
-## 9. 개발 및 협업
-
-본 프로젝트는 GitHub를 통해 프론트엔드와 백엔드 코드를 통합 관리합니다.
-
-- Organization: `encore-ai-campus`
-- Repository: `aio-03-p1-team2`
-- Main Branch: `main`
-
-프로젝트는 팀 단위로 개발되었으며, 기능별 역할을 분담하여 협업했습니다.
-
----
-
-**NoteCam - 기존 웹캠을 활용한 AI 기반 스마트 홈 모니터링 서비스**
-
-엔코아 AI 캠퍼스 팀 프로젝트
+- DB 설계는 2026-10-22에 조회한 Supabase 테이블·제약조건 결과를 기준으로 합니다.
+- API 및 화면 구조는 위 개발 저장소의 기준 커밋과 문서를 참고했습니다.
+- 관리자 **운영현황** 화면과 **실시간 시스템 운영 로그 대시보드**는 동일한 것으로 취급하지 않습니다. 후자는 별도 구현/검증이 필요합니다.
+- 공개 저장소 업로드 전 스크린샷에 개인정보·얼굴·실내 장면이 포함됐는지 검토하세요.
