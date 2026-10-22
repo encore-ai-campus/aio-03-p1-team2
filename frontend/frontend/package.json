@@ -1,0 +1,27 @@
+{
+  "name": "frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "npm run check:app",
+    "check:app": "node scripts/check-render.mjs",
+    "test": "node --test src/shared/api/request.test.js src/features/live/browserCamera.test.js src/features/live/registerCamera.test.js",
+    "format": "prettier --write src/app src/features src/shared src/main.jsx scripts/check-render.mjs",
+    "format:check": "prettier --check src/app src/features src/shared src/main.jsx scripts/check-render.mjs"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "esbuild": "^0.21.5",
+    "prettier": "3.9.10",
+    "react-test-renderer": "18.3.1",
+    "vite": "^5.4.8"
+  }
+}

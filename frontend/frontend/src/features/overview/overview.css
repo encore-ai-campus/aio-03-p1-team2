@@ -1,0 +1,218 @@
+.overview-refreshing {
+  margin: -8px 0 12px;
+}
+
+.overview-action-message {
+  margin: -8px 0 12px;
+  color: var(--green);
+  font-size: 12px;
+}
+
+.overview-metrics {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.overview-charts,
+.overview-lists {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.overview-panel {
+  padding: 18px;
+}
+
+.overview-panel h2 {
+  font-size: 16px;
+}
+
+.overview-panel-copy {
+  margin: 5px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.overview-status-bar {
+  display: flex;
+  height: 18px;
+  margin-top: 28px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--subtle);
+}
+
+.overview-status-segment {
+  min-width: 0;
+}
+
+.overview-status-pending {
+  background: #dfac5d;
+}
+
+.overview-status-in_progress {
+  background: #72a9bd;
+}
+
+.overview-status-resolved {
+  background: #63a77c;
+}
+
+.overview-status-legend,
+.overview-kind-chart,
+.overview-recent-list {
+  padding: 0;
+  list-style: none;
+}
+
+.overview-status-legend {
+  display: grid;
+  gap: 11px;
+  margin: 24px 0 0;
+}
+
+.overview-status-legend li {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 13px;
+}
+
+.overview-status-legend strong {
+  margin-left: auto;
+  font-size: 14px;
+}
+
+.overview-legend-dot {
+  flex: none;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+}
+
+.overview-kind-chart {
+  display: grid;
+  gap: 15px;
+  margin: 24px 0 0;
+}
+
+.overview-kind-chart li {
+  display: grid;
+  grid-template-columns: minmax(90px, 1fr) minmax(60px, 1.6fr) auto;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+}
+
+.overview-kind-chart strong {
+  min-width: 34px;
+  text-align: right;
+}
+
+.overview-kind-track {
+  height: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--subtle);
+}
+
+.overview-kind-track > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--green);
+}
+
+.overview-list-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.overview-list-heading button {
+  flex: none;
+  font-size: 12px;
+}
+
+.overview-recent-list {
+  margin: 14px 0 0;
+}
+
+.overview-recent-list li {
+  min-width: 0;
+  border-top: 1px solid var(--line);
+}
+
+.overview-panel .overview-recent-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  width: 100%;
+  padding: 12px 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  text-align: left;
+}
+
+.overview-panel .overview-recent-link:hover {
+  color: var(--green);
+}
+
+.overview-panel .overview-recent-link:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: -2px;
+}
+
+.overview-recent-link > div:first-child {
+  min-width: 0;
+}
+
+.overview-recent-list strong,
+.overview-recent-list small {
+  display: block;
+}
+
+.overview-recent-list strong {
+  overflow-wrap: anywhere;
+}
+
+.overview-recent-list small,
+.overview-list-meta time {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.overview-list-meta {
+  display: flex;
+  flex: none;
+  align-items: flex-end;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 12px;
+}
+
+.overview-empty {
+  margin: 24px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+@media (max-width: 960px) {
+  .overview-charts,
+  .overview-lists {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .overview-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .overview-kind-chart li {
+    grid-template-columns: minmax(95px, 1fr) minmax(40px, 1fr) auto;
+  }
+}

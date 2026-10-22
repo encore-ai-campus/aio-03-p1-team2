@@ -1,0 +1,486 @@
+/* [UI-OV07] 기능·역할: 일반 사용자 운영현황의 시안 스타일. 수행 이유: 글자·카드·목록 간격을 승인된 HTML과 맞추고 다른 화면에는 영향을 주지 않습니다. */
+.user-overview {
+  --amber: #9b702b;
+  --red: #ae6257;
+  font:
+    13px/1.55 system-ui,
+    -apple-system,
+    'Malgun Gothic',
+    sans-serif;
+}
+.user-overview .overview-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+.user-overview-eyebrow {
+  margin: 0 0 4px;
+  color: var(--green);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+.user-overview .dashboard-heading h1 {
+  font-size: 23px;
+  letter-spacing: -0.8px;
+  line-height: 1.4;
+}
+.user-overview .dashboard-heading p {
+  margin-top: 5px;
+  font-size: 12px;
+}
+.user-overview .user-overview-metrics {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 11px;
+  margin-bottom: 17px;
+}
+.user-overview-summary {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 15px 14px 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.user-overview-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+.user-overview-card-head h2 {
+  margin: 0;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 700;
+}
+.user-overview-card-icon {
+  display: grid;
+  flex: none;
+  width: 25px;
+  height: 25px;
+  place-items: center;
+  border-radius: 7px;
+  background: #f1f5f2;
+  color: #6a8d76;
+}
+.user-overview-card-icon svg {
+  width: 14px;
+  height: 14px;
+}
+.user-overview-card-value {
+  margin-top: 12px;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.8px;
+  overflow-wrap: anywhere;
+}
+.user-overview-unit {
+  margin-left: 3px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+.user-overview-tone-good {
+  color: var(--green);
+}
+.user-overview-tone-warn {
+  color: var(--amber);
+}
+.user-overview-tone-error {
+  color: var(--red);
+}
+/* [UI-CAM02] 기능·역할: 현재 카메라 ON/OFF 표시. 수행 이유: OFF는 회색으로 구분하고 작은 화면에서도 영문 상태가 잘리지 않게 합니다. */
+.user-overview-tone-muted {
+  color: var(--muted);
+}
+.user-overview-camera-value {
+  font-size: clamp(16px, 2.4vw, 24px);
+  white-space: nowrap;
+}
+.user-overview-live-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: #4f956a;
+  vertical-align: middle;
+}
+.user-overview-summary.is-unavailable .user-overview-card-value {
+  color: var(--muted);
+  font-size: 17px;
+  letter-spacing: -0.4px;
+}
+.user-overview-detail {
+  min-height: 34px;
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.user-overview-card-foot {
+  padding-top: 9px;
+  margin-top: 12px;
+  border-top: 1px solid #edf1ee;
+  color: var(--muted);
+  font-size: 10px;
+}
+.dashboard .user-overview-link {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--green);
+  font-size: 10px;
+  text-align: left;
+}
+.user-overview .overview-lists {
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 14px;
+}
+.user-overview .overview-panel {
+  padding: 0;
+  margin-bottom: 0;
+  border-radius: 10px;
+}
+.user-overview .overview-list-heading {
+  align-items: center;
+  padding: 15px 16px 0;
+}
+.user-overview .overview-panel h2 {
+  font-size: 13px;
+  font-weight: 650;
+  letter-spacing: -0.15px;
+}
+.user-overview .overview-panel-copy {
+  margin: 4px 16px 0;
+  font-size: 10px;
+}
+.user-overview .overview-empty,
+.user-overview .overview-panel .empty {
+  padding: 28px 16px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+  text-align: center;
+}
+.dashboard .user-overview .form-error {
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+.user-overview-refresh {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 7px;
+}
+.user-overview-refresh > span {
+  color: var(--muted);
+  font-size: 10px;
+}
+.user-overview .user-overview-refresh .button,
+.user-overview .empty .button {
+  padding: 7px 11px;
+  font-size: 11px;
+}
+.user-overview .user-overview-chart {
+  width: 100%;
+  margin-bottom: 17px;
+}
+.user-overview-chart-body {
+  padding: 14px 16px 16px;
+}
+.user-overview-chart-summary {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+}
+.user-overview-chart-summary strong {
+  color: var(--text);
+  font-size: 27px;
+  letter-spacing: -1px;
+}
+.user-overview-chart-range {
+  margin: 3px 0 15px;
+  color: var(--muted);
+  font-size: 9px;
+}
+.user-overview .user-overview-status-bar {
+  height: 19px;
+  margin-top: 0;
+  gap: 3px;
+  border-radius: 5px;
+}
+.user-overview-status-bar > span {
+  flex-basis: 0;
+  min-width: 0;
+}
+.user-overview-status-legend {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px 16px;
+  padding: 0;
+  margin: 17px 0 0;
+  list-style: none;
+}
+.user-overview-status-legend li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  color: var(--muted);
+  font-size: 10px;
+}
+.user-overview-status-legend strong {
+  margin-left: auto;
+  color: var(--text);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.user-overview-status-legend .overview-legend-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+}
+.user-overview-state-succeeded {
+  background: #448160;
+}
+.user-overview-state-running {
+  background: #7fa7ad;
+}
+.user-overview-state-waiting {
+  background: #d7ddce;
+}
+.user-overview-state-collecting {
+  background: #a2b9a9;
+}
+.user-overview-state-failed {
+  background: #cd9083;
+}
+.user-overview-state-interrupted {
+  background: #b8afa1;
+}
+.user-overview-note {
+  padding-top: 11px;
+  margin: 17px 0 0;
+  border-top: 1px solid #edf1ee;
+  color: var(--muted);
+  font-size: 9px;
+}
+.user-overview-tag {
+  padding: 3px 7px;
+  border-radius: 5px;
+  background: #f1f5f2;
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.user-overview-records {
+  padding: 5px 16px 7px;
+  margin: 0;
+  list-style: none;
+}
+.user-overview-records li + li {
+  border-top: 1px solid #edf1ee;
+}
+.dashboard .user-overview-record,
+.dashboard .user-overview-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  text-align: left;
+}
+.user-overview-row-content {
+  flex: 1;
+  min-width: 0;
+}
+.user-overview-record-time {
+  flex: none;
+  min-width: 36px;
+  padding-top: 2px;
+  color: var(--muted);
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+}
+.user-overview-record-title,
+.user-overview-notice-message {
+  display: block;
+  color: #3e5145;
+  font-size: 11px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.user-overview-record-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 9px;
+}
+/* [UI-OV08] 기능·역할: 실제 처리 상태·판정의 색상 구분. 수행 이유: 확인됨·판단 어려움·실패·대기 상태를 시안의 배지 색으로 표시합니다. */
+.user-overview-pill {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 9px;
+  font-weight: 500;
+}
+.user-overview-pill.user-overview-tone-good {
+  background: #edf5ef;
+}
+.user-overview-pill.user-overview-tone-warn {
+  background: #fff4de;
+}
+.user-overview-pill.user-overview-tone-error {
+  background: #f9eeeb;
+}
+.user-overview-pill.user-overview-tone-neutral {
+  background: #f0f3f1;
+  color: var(--muted);
+}
+.user-overview-row-arrow {
+  flex: none;
+  margin-top: 3px;
+  color: #9aae9e;
+  font-size: 13px;
+}
+.user-overview-record:hover,
+.user-overview-notice:hover {
+  background: #f8faf8;
+}
+.user-overview button:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
+}
+.dashboard .user-overview button:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+.user-overview-notice-dot {
+  flex: none;
+  width: 6px;
+  height: 6px;
+  margin-top: 7px;
+  border-radius: 50%;
+  background: #478662;
+}
+.user-overview-notice.is-read .user-overview-notice-dot {
+  background: #d6dfd9;
+}
+.user-overview-notice.is-read .user-overview-notice-message {
+  color: #819087;
+}
+.user-overview-notice-meta {
+  display: block;
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 9px;
+}
+.user-overview-scope {
+  margin: 15px 0 0;
+  color: var(--muted);
+  font-size: 9px;
+  text-align: right;
+}
+.user-overview .notification-dialog.user-overview-dialog {
+  width: min(490px, calc(100vw - 30px));
+  border-radius: 13px;
+}
+.user-overview .user-overview-dialog .notification-dialog-head {
+  padding: 17px 20px;
+}
+.user-overview .user-overview-dialog .notification-dialog-head h2 {
+  font-size: 15px;
+}
+.user-overview-dialog-body {
+  padding: 18px 20px 22px;
+  font-size: 12px;
+}
+.user-overview-dialog .user-overview-dialog-body > p {
+  margin: 0 0 12px;
+}
+.user-overview-dialog-body .user-overview-records {
+  padding: 0;
+}
+@media (max-width: 990px) {
+  .user-overview .user-overview-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .user-overview-detail {
+    min-height: 0;
+  }
+}
+@media (max-width: 700px) {
+  .user-overview .overview-toolbar {
+    align-items: flex-start;
+  }
+  .user-overview .dashboard-heading h1 {
+    font-size: 21px;
+  }
+  .user-overview .dashboard-heading p {
+    max-width: 200px;
+    font-size: 11px;
+  }
+  .user-overview-refresh {
+    gap: 5px;
+  }
+  .user-overview-refresh > span {
+    max-width: 100px;
+    font-size: 9px;
+    text-align: right;
+  }
+  .user-overview .user-overview-metrics {
+    gap: 9px;
+  }
+  .user-overview-summary {
+    padding: 13px 11px 11px;
+  }
+  .user-overview-card-head h2 {
+    font-size: 12px;
+  }
+  .user-overview-card-icon {
+    width: 22px;
+    height: 22px;
+  }
+  .user-overview-card-value {
+    font-size: 23px;
+  }
+  .user-overview-detail {
+    min-height: 34px;
+    font-size: 9px;
+  }
+  .user-overview-card-foot {
+    font-size: 9px;
+  }
+  .user-overview .overview-lists {
+    grid-template-columns: 1fr;
+    gap: 13px;
+  }
+  .user-overview-status-legend {
+    gap: 11px 12px;
+  }
+  .user-overview-status-legend li {
+    font-size: 9px;
+  }
+  .user-overview-scope {
+    text-align: left;
+    line-height: 1.8;
+  }
+}

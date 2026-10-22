@@ -1,0 +1,99 @@
+.workspace {
+  --green-soft: #e5f2e9;
+  --red: #c44c43;
+}
+.workspace button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.workspace button:focus-visible,
+.workspace input:focus-visible,
+.workspace textarea:focus-visible,
+.workspace select:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
+}
+.workspace textarea,
+.workspace select {
+  font: inherit;
+  color: inherit;
+}
+.workspace .page-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.workspace .muted {
+  color: var(--muted);
+  font-size: 11px;
+}
+.workspace .button {
+  padding: 8px 11px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--surface);
+  font-size: 12px;
+}
+.workspace .button.primary {
+  border-color: transparent;
+  background: var(--green);
+  color: white;
+}
+.workspace .button.small {
+  padding: 4px 8px;
+  font-size: 11px;
+}
+.workspace .button.delete,
+.workspace .form-error {
+  color: var(--red);
+}
+.workspace .form-error {
+  font-size: 12px;
+}
+.workspace .alert-box {
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.workspace .panel {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: var(--surface);
+  overflow: hidden;
+}
+.workspace .panel-head {
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+}
+.workspace .panel-head h2 {
+  margin: 0;
+  font-size: 14px;
+}
+.workspace .empty {
+  padding: 30px 16px;
+  text-align: center;
+  color: var(--muted);
+}
+.workspace .empty .button {
+  margin-top: 12px;
+}
+.workspace .actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.workspace .pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 16px;
+  font-size: 12px;
+}

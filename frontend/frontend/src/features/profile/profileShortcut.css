@@ -1,0 +1,49 @@
+.dashboard-user .profile-shortcut,
+.landing-nav .profile-shortcut {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 200px;
+  padding: 4px 11px 4px 4px;
+  border: 1px solid #dce5df;
+  border-radius: 999px;
+  background: #fff;
+  color: #1d2923;
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.profile-shortcut-avatar {
+  display: block;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-shortcut span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-shortcut:focus-visible {
+  outline: 2px solid #2f7655;
+  outline-offset: 2px;
+}
+
+@media (max-width: 520px) {
+  .dashboard-user .profile-shortcut,
+  .landing-nav .profile-shortcut {
+    max-width: 27vw;
+  }
+
+  .profile-shortcut-avatar {
+    width: 28px;
+    height: 28px;
+  }
+}

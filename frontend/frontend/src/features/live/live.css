@@ -1,0 +1,239 @@
+/* 실시간 보기: 카메라 영상과 최근 움직임 목록 */
+.workspace .live-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.workspace .record-control {
+  display: grid;
+  place-items: center;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--surface);
+  cursor: pointer;
+}
+.workspace .record-control span {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #df423c;
+}
+.workspace .record-control[data-recording='true'] {
+  background: #df423c12;
+  border-color: #df423c;
+}
+.workspace .record-control[data-recording='true'] span {
+  width: 18px;
+  height: 18px;
+  border-radius: 3px;
+}
+.workspace .grid-live {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(235px, 0.9fr);
+  gap: 14px;
+}
+.workspace .live-view {
+  grid-template-columns: minmax(0, 3fr) minmax(240px, 1fr);
+  align-items: start;
+}
+.workspace .camera-scene {
+  position: relative;
+  background: #17221c;
+}
+.workspace .camera-scene video {
+  display: block;
+  width: 100%;
+  height: clamp(420px, 60dvh, 640px);
+  object-fit: contain;
+}
+.workspace .camera-placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  color: #dce5df;
+  text-align: center;
+  font-size: 12px;
+}
+.workspace .camera-live {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #171d1acc;
+  color: white;
+  padding: 5px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+}
+.workspace .camera-live .dot,
+.workspace .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.workspace .camera-live .dot {
+  background: #ef5b51;
+}
+.workspace .event-list {
+  padding: 0 14px;
+}
+.workspace .live-motion-panel > .api-error {
+  margin: 12px 14px;
+}
+.workspace .event {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr) auto;
+  gap: 9px;
+  align-items: center;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--line);
+}
+.workspace .event:last-child {
+  border-bottom: 0;
+}
+.workspace .motion-event {
+  width: 100%;
+  grid-template-columns: minmax(0, 1fr);
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+}
+.workspace .event-time {
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 10px;
+}
+.workspace .event-summary {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+.workspace .event-summary-head,
+.workspace .event-summary-footer {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+}
+.workspace .event-verdicts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+}
+.workspace .event-summary-text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+}
+.workspace .event-summary-footer {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+/* 분석 결과 표시(실시간 목록·이벤트 로그 공용) */
+.workspace .analysis-items {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+  width: 100%;
+  text-align: left;
+}
+.workspace .analysis-item {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+  line-height: 1.5;
+}
+.workspace .analysis-item + .analysis-item {
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
+.workspace .analysis-item-heading {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+}
+.workspace .analysis-item-heading strong {
+  font-size: 13px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.workspace .analysis-verdict {
+  flex-shrink: 0;
+  font-size: 11px;
+  color: var(--muted);
+}
+.workspace .analysis-verdict.confirmed {
+  color: var(--green);
+}
+
+/* 분석 설정 다이얼로그 */
+.workspace .question-settings-dialog textarea {
+  width: 100%;
+  min-height: 110px;
+  resize: vertical;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+}
+.workspace .question-list-head,
+.workspace .question-input-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.workspace .question-list-head {
+  margin-bottom: 12px;
+}
+.workspace .question-list-head h3 {
+  margin: 0;
+}
+.workspace .question-inputs {
+  display: grid;
+  gap: 14px;
+}
+.workspace .question-input-head {
+  margin-bottom: 6px;
+}
+.workspace .question-remove {
+  background: transparent;
+  border: 0;
+  color: var(--muted);
+  font: inherit;
+  cursor: pointer;
+  padding: 5px 8px;
+}
+.workspace .question-settings-dialog .question-input textarea {
+  min-height: 76px;
+}
+
+@media (max-width: 720px) {
+  .workspace .live-view {
+    grid-template-columns: 1fr;
+  }
+  .workspace .camera-scene video {
+    height: clamp(320px, 50dvh, 480px);
+  }
+}

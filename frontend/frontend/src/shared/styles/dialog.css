@@ -1,0 +1,46 @@
+.workspace .notification-dialog {
+  width: min(600px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  margin: auto;
+  padding: 0;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 24px 80px #0004;
+}
+.workspace .notification-dialog::backdrop {
+  background: #101b1666;
+  backdrop-filter: blur(3px);
+}
+.workspace .notification-dialog-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--line);
+}
+.workspace .notification-dialog h2 {
+  font-size: 18px;
+}
+.workspace .notification-close {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--subtle);
+  font-size: 20px;
+  line-height: 1;
+}
+.workspace .notification-dialog-body {
+  padding: 20px;
+}
+.workspace .notification-dialog .profile-body {
+  padding: 16px;
+}
